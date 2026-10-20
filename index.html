@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f1f2ee">
+  <meta name="description" content="Fotografisches Werkarchiv von Johann Heinrich Gillessen.">
+  <title>Johann Heinrich Gillessen | Werkarchiv</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f1f2ee;
+      --ink: #202923;
+      --muted: #69736c;
+      --line: #d5d9d2;
+      --accent: #b44832;
+      --thumb: #e4e7e1;
+      --serif: "Newsreader", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    .page-shell { width: min(100% - 64px, 1440px); margin: 0 auto; }
+    .masthead { display: flex; align-items: center; justify-content: space-between; min-height: 66px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .masthead-mark { color: var(--accent); }
+    .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; padding: 65px 0 44px; }
+    .eyebrow { margin: 0 0 13px; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 0; font-family: var(--serif); font-size: clamp(46px, 6vw, 82px); font-weight: 400; line-height: .98; }
+    .intro-note { max-width: 280px; margin: 0 0 5px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 17px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter { min-height: 36px; padding: 0 13px; border: 1px solid transparent; border-radius: 2px; background: transparent; color: var(--muted); font: 500 12px var(--sans); cursor: pointer; transition: color .18s ease, background .18s ease, border-color .18s ease; }
+    .filter:hover { color: var(--ink); border-color: var(--line); }
+    .filter[aria-pressed="true"] { background: var(--ink); color: white; }
+    .search { width: min(260px, 35vw); min-height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: 2px; outline: none; background: transparent; color: var(--ink); font: 400 13px var(--sans); }
+    .search:focus { border-color: var(--accent); }
+    .search::placeholder { color: #89918b; }
+    .gallery-meta { display: flex; justify-content: space-between; padding: 19px 0 14px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 18px; padding-bottom: 72px; }
+    .artwork { display: block; min-width: 0; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: zoom-in; }
+    .artwork-image-wrap { display: grid; aspect-ratio: 4 / 5; place-items: center; overflow: hidden; background: var(--thumb); }
+    .artwork img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
+    .artwork:hover img { transform: scale(1.025); }
+    .artwork:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .caption { display: flex; justify-content: space-between; gap: 8px; padding-top: 9px; font-size: 12px; }
+    .caption-date { color: var(--muted); }
+    .caption-index { color: var(--accent); font-variant-numeric: tabular-nums; }
+    .empty-state { display: none; padding: 64px 0 100px; color: var(--muted); font-family: var(--serif); font-size: 28px; text-align: center; }
+    footer { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    dialog { width: min(94vw, 1200px); max-width: none; max-height: 94vh; padding: 0; border: 1px solid #39423c; background: #171d19; color: #f1f2ee; }
+    dialog::backdrop { background: rgb(13 18 15 / 88%); }
+    .viewer { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: min(90vh, 1000px); }
+    .viewer-bar, .viewer-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 16px; }
+    .viewer-bar { border-bottom: 1px solid #39423c; }
+    .viewer-footer { border-top: 1px solid #39423c; }
+    .viewer-label { color: #c5cec7; font-size: 12px; }
+    .viewer-image-wrap { display: grid; min-height: 0; place-items: center; padding: 12px; }
+    .viewer-image { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+    .viewer-button { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #465149; border-radius: 2px; background: transparent; color: white; font: 20px var(--sans); cursor: pointer; }
+    .viewer-button:hover { background: #2d3730; }
+    .viewer-actions { display: flex; gap: 8px; }
+    @media (max-width: 1000px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 680px) {
+      .page-shell { width: min(100% - 32px, 520px); }
+      .masthead { min-height: 56px; font-size: 9px; }
+      .intro { grid-template-columns: 1fr; gap: 17px; padding: 47px 0 30px; }
+      h1 { font-size: 52px; }
+      .intro-note { max-width: 390px; }
+      .toolbar { align-items: stretch; flex-direction: column; gap: 12px; }
+      .search { width: 100%; }
+      .filters { gap: 4px; }
+      .filter { padding: 0 10px; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; }
+      .caption { font-size: 11px; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="masthead">
+      <span class="masthead-mark">JHG / Archiv</span>
+      <span>Fotodokumentation</span>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Digitales Werkarchiv</p>
+          <h1 id="page-title">Johann Heinrich<br>Gillessen</h1>
+        </div>
+        <p class="intro-note">Eine fotografische Übersicht der überlieferten Werke. Aufnahmen vom 1., 4. und 7. Juni 2026.</p>
+      </section>
+      <section aria-label="Bildarchiv">
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Nach Aufnahmedatum filtern">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true">Alle</button>
+            <button class="filter" type="button" data-filter="20260601" aria-pressed="false">01. Juni</button>
+            <button class="filter" type="button" data-filter="20260604" aria-pressed="false">04. Juni</button>
+            <button class="filter" type="button" data-filter="20260607" aria-pressed="false">07. Juni</button>
+          </div>
+          <label>
+            <span hidden>Archiv durchsuchen</span>
+            <input class="search" id="search" type="search" placeholder="Archiv durchsuchen" autocomplete="off">
+          </label>
+        </div>
+        <div class="gallery-meta">
+          <span id="result-count" aria-live="polite"></span>
+          <span>Aufnahmen nach Datum</span>
+        </div>
+        <div class="gallery" id="gallery"></div>
+        <p class="empty-state" id="empty-state">Keine Aufnahmen gefunden.</p>
+      </section>
+    </main>
+    <footer>
+      <span>Werkarchiv · Johann Heinrich Gillessen</span>
+      <span>Fotografische Dokumentation · 2026</span>
+    </footer>
+  </div>
+
+  <dialog id="viewer" aria-label="Bildansicht">
+    <div class="viewer">
+      <div class="viewer-bar">
+        <span class="viewer-label" id="viewer-label"></span>
+        <button class="viewer-button" id="close-viewer" type="button" aria-label="Ansicht schließen" title="Schließen">×</button>
+      </div>
+      <div class="viewer-image-wrap"><img class="viewer-image" id="viewer-image" alt=""></div>
+      <div class="viewer-footer">
+        <span class="viewer-label" id="viewer-filename"></span>
+        <div class="viewer-actions">
+          <button class="viewer-button" id="previous-image" type="button" aria-label="Vorheriges Bild" title="Vorheriges Bild">‹</button>
+          <button class="viewer-button" id="next-image" type="button" aria-label="Nächstes Bild" title="Nächstes Bild">›</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const files = [
+      "PXL_20260601_100349352.jpg", "PXL_20260601_100702009.jpg", "PXL_20260601_100959846.jpg",
+      "PXL_20260601_101202954.jpg", "PXL_20260601_101249340.jpg", "PXL_20260601_101422239.jpg",
+      "PXL_20260601_101457707.jpg", "PXL_20260601_101548886.jpg", "PXL_20260601_101631204.jpg",
+      "PXL_20260601_101709395.jpg", "PXL_20260601_101757618.jpg", "PXL_20260601_101832919.jpg",
+      "PXL_20260601_101923236.jpg", "PXL_20260601_102011827.jpg", "PXL_20260601_102048755.jpg",
+      "PXL_20260601_102128619.jpg", "PXL_20260601_102209243.jpg", "PXL_20260601_102321369.jpg",
+      "PXL_20260601_102406887.jpg", "PXL_20260601_102455259.jpg", "PXL_20260601_102556088.jpg",
+      "PXL_20260601_102723352.jpg", "PXL_20260601_102809859.jpg", "PXL_20260601_102901974.jpg",
+      "PXL_20260601_102939138.jpg", "PXL_20260601_103013637.jpg", "PXL_20260601_103222450.jpg",
+      "PXL_20260601_103353934.jpg", "PXL_20260601_104050034.jpg", "PXL_20260601_104221486.jpg",
+      "PXL_20260601_171254781.jpg", "PXL_20260604_083748258.jpg", "PXL_20260604_083814169.jpg",
+      "PXL_20260604_083907677.jpg", "PXL_20260604_084013634.jpg", "PXL_20260604_084040615.jpg",
+      "PXL_20260604_085116354.jpg", "PXL_20260604_085125191.jpg", "PXL_20260604_085137589.jpg",
+      "PXL_20260604_085146510.jpg", "PXL_20260604_085407363.jpg", "PXL_20260604_085442239.jpg",
+      "PXL_20260604_085510684.jpg", "PXL_20260604_085710498.jpg", "PXL_20260604_085841738.jpg",
+      "PXL_20260604_090151238.jpg", "PXL_20260604_091112172.jpg", "PXL_20260604_091213113.jpg",
+      "PXL_20260604_091757233.jpg", "PXL_20260604_091823514.jpg", "PXL_20260604_092257107.jpg",
+      "PXL_20260604_092602319.jpg", "PXL_20260604_092745038.jpg", "PXL_20260604_101335778.jpg",
+      "PXL_20260604_101416787.jpg", "PXL_20260604_101451959.jpg", "PXL_20260604_101519259.jpg",
+      "PXL_20260604_101719030.jpg", "PXL_20260604_101900783.jpg", "PXL_20260607_105501910.jpg",
+      "PXL_20260607_105645566.jpg", "PXL_20260607_110218711.jpg", "PXL_20260607_110314893.jpg"
+    ];
+
+    const gallery = document.querySelector("#gallery");
+    const search = document.querySelector("#search");
+    const resultCount = document.querySelector("#result-count");
+    const emptyState = document.querySelector("#empty-state");
+    const viewer = document.querySelector("#viewer");
+    const viewerImage = document.querySelector("#viewer-image");
+    const viewerLabel = document.querySelector("#viewer-label");
+    const viewerFilename = document.querySelector("#viewer-filename");
+    const dateLabels = { "20260601": "01. Juni 2026", "20260604": "04. Juni 2026", "20260607": "07. Juni 2026" };
+    let activeDate = "all";
+    let visibleFiles = files;
+    let activeIndex = 0;
+
+    function formatDate(filename) {
+      return dateLabels[filename.slice(4, 12)];
+    }
+
+    function renderGallery() {
+      const query = search.value.trim().toLocaleLowerCase("de");
+      visibleFiles = files.filter((filename) => {
+        const matchesDate = activeDate === "all" || filename.includes(activeDate);
+        const matchesQuery = !query || `${filename} ${formatDate(filename)}`.toLocaleLowerCase("de").includes(query);
+        return matchesDate && matchesQuery;
+      });
+      gallery.replaceChildren(...visibleFiles.map((filename) => {
+        const button = document.createElement("button");
+        button.className = "artwork";
+        button.type = "button";
+        button.setAttribute("aria-label", `Aufnahme ${files.indexOf(filename) + 1}: ${formatDate(filename)}`);
+        button.innerHTML = `<span class="artwork-image-wrap"><img src="Bilder/${filename}" alt="Gemälde, aufgenommen am ${formatDate(filename)}" loading="lazy" decoding="async"></span><span class="caption"><span class="caption-date">${formatDate(filename)}</span><span class="caption-index">${String(files.indexOf(filename) + 1).padStart(2, "0")}</span></span>`;
+        button.addEventListener("click", () => openViewer(visibleFiles.indexOf(filename)));
+        return button;
+      }));
+      resultCount.textContent = `${visibleFiles.length} ${visibleFiles.length === 1 ? "Aufnahme" : "Aufnahmen"}`;
+      emptyState.style.display = visibleFiles.length ? "none" : "block";
+    }
+
+    function openViewer(index) {
+      activeIndex = index;
+      updateViewer();
+      viewer.showModal();
+    }
+
+    function updateViewer() {
+      const filename = visibleFiles[activeIndex];
+      viewerImage.src = `Bilder/${filename}`;
+      viewerImage.alt = `Gemälde, aufgenommen am ${formatDate(filename)}`;
+      viewerLabel.textContent = `${String(files.indexOf(filename) + 1).padStart(2, "0")} / ${files.length} · ${formatDate(filename)}`;
+      viewerFilename.textContent = filename;
+    }
+
+    function moveViewer(step) {
+      activeIndex = (activeIndex + step + visibleFiles.length) % visibleFiles.length;
+      updateViewer();
+    }
+
+    document.querySelectorAll(".filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeDate = button.dataset.filter;
+        document.querySelectorAll(".filter").forEach((filter) => filter.setAttribute("aria-pressed", String(filter === button)));
+        renderGallery();
+      });
+    });
+    search.addEventListener("input", renderGallery);
+    document.querySelector("#close-viewer").addEventListener("click", () => viewer.close());
+    document.querySelector("#previous-image").addEventListener("click", () => moveViewer(-1));
+    document.querySelector("#next-image").addEventListener("click", () => moveViewer(1));
+    viewer.addEventListener("click", (event) => { if (event.target === viewer) viewer.close(); });
+    viewer.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") moveViewer(-1);
+      if (event.key === "ArrowRight") moveViewer(1);
+    });
+    renderGallery();
+  </script>
+</body>
+</html>
