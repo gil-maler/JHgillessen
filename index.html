@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f1f2ee">
-  <meta name="description" content="Fotografisches Werkarchiv von Johann Heinrich Gillessen.">
-  <title>Johann Heinrich Gillessen | Werkarchiv</title>
+  <meta name="description" content="Biografie und fotografisches Werkarchiv des Künstlers und Kunsterziehers Johann Heinrich Gillessen.">
+  <title>Johann Heinrich Gillessen | Leben und Werk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
@@ -26,10 +26,36 @@
     .page-shell { width: min(100% - 64px, 1440px); margin: 0 auto; }
     .masthead { display: flex; align-items: center; justify-content: space-between; min-height: 66px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     .masthead-mark { color: var(--accent); }
+    .main-nav { display: flex; gap: 20px; }
+    .main-nav a { color: inherit; text-decoration: none; }
+    .main-nav a:hover, .main-nav a:focus-visible { color: var(--accent); }
     .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; padding: 65px 0 44px; }
     .eyebrow { margin: 0 0 13px; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
     h1 { margin: 0; font-family: var(--serif); font-size: clamp(46px, 6vw, 82px); font-weight: 400; line-height: .98; }
     .intro-note { max-width: 280px; margin: 0 0 5px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .biography { padding: 34px 0 68px; border-top: 1px solid var(--line); }
+    .biography-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr); align-items: end; gap: 32px; margin-bottom: 34px; }
+    .biography h2 { margin: 0; font: 400 clamp(36px, 4vw, 54px)/1 var(--serif); }
+    .biography-lead { max-width: 540px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .biography-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .7fr); gap: 52px; align-items: start; }
+    .timeline { margin: 0; padding: 0; list-style: none; }
+    .timeline-item { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 22px; padding: 0 0 27px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-year { position: relative; color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+    .timeline-year::after { position: absolute; top: 21px; bottom: -27px; left: 0; width: 1px; background: var(--line); content: ""; }
+    .timeline-item:last-child .timeline-year::after { display: none; }
+    .timeline-copy { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .timeline-item:last-child .timeline-copy { padding-bottom: 0; border-bottom: 0; }
+    .timeline-copy h3 { margin: -4px 0 7px; font: 500 21px/1.2 var(--serif); }
+    .timeline-copy p, .biography-note p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .timeline-copy p + p, .biography-note p + p { margin-top: 9px; }
+    .biography-aside { display: grid; gap: 14px; }
+    .biography-note { padding: 21px; border: 1px solid var(--line); }
+    .biography-note h3 { margin: 0 0 10px; font: 500 22px/1.2 var(--serif); }
+    .biography-note.quote { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+    .biography-note.quote h3 { color: var(--paper); font-size: 28px; }
+    .biography-note.quote p { color: #d0d6d0; }
+    .source-note { margin: 21px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
     .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 17px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .filters { display: flex; flex-wrap: wrap; gap: 7px; }
     .filter { min-height: 36px; padding: 0 13px; border: 1px solid transparent; border-radius: 2px; background: transparent; color: var(--muted); font: 500 12px var(--sans); cursor: pointer; transition: color .18s ease, background .18s ease, border-color .18s ease; }
@@ -62,13 +88,22 @@
     .viewer-button { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #465149; border-radius: 2px; background: transparent; color: white; font: 20px var(--sans); cursor: pointer; }
     .viewer-button:hover { background: #2d3730; }
     .viewer-actions { display: flex; gap: 8px; }
-    @media (max-width: 1000px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 1000px) {
+      .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .biography-layout { grid-template-columns: minmax(0, 1.2fr) minmax(230px, .8fr); gap: 30px; }
+    }
     @media (max-width: 680px) {
       .page-shell { width: min(100% - 32px, 520px); }
       .masthead { min-height: 56px; font-size: 9px; }
+      .main-nav { gap: 12px; }
       .intro { grid-template-columns: 1fr; gap: 17px; padding: 47px 0 30px; }
       h1 { font-size: 52px; }
       .intro-note { max-width: 390px; }
+      .biography { padding: 29px 0 48px; }
+      .biography-heading, .biography-layout { grid-template-columns: 1fr; gap: 18px; }
+      .biography-heading { margin-bottom: 25px; }
+      .timeline-item { grid-template-columns: 70px minmax(0, 1fr); gap: 14px; }
+      .biography-aside { grid-template-columns: 1fr; }
       .toolbar { align-items: stretch; flex-direction: column; gap: 12px; }
       .search { width: 100%; }
       .filters { gap: 4px; }
@@ -84,6 +119,10 @@
   <div class="page-shell">
     <header class="masthead">
       <span class="masthead-mark">JHG / Archiv</span>
+      <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="#biografie">Biografie</a>
+        <a href="#archiv">Werkarchiv</a>
+      </nav>
       <span>Fotodokumentation</span>
     </header>
     <main>
@@ -92,9 +131,81 @@
           <p class="eyebrow">Digitales Werkarchiv</p>
           <h1 id="page-title">Johann Heinrich<br>Gillessen</h1>
         </div>
-        <p class="intro-note">Eine fotografische Übersicht der überlieferten Werke. Aufnahmen vom 1., 4. und 7. Juni 2026.</p>
+        <p class="intro-note">Biografie und fotografische Übersicht der überlieferten Werke. Aufnahmen vom 1., 4. und 7. Juni 2026.</p>
       </section>
-      <section aria-label="Bildarchiv">
+      <section class="biography" id="biografie" aria-labelledby="biography-title">
+        <div class="biography-heading">
+          <div>
+            <p class="eyebrow">Leben &amp; Arbeit</p>
+            <h2 id="biography-title">Künstler, Lehrer, Familienmensch</h2>
+          </div>
+          <p class="biography-lead">Johann Heinrich Gillessen verband eine akademische Ausbildung und eine lebenslange Hinwendung zur gegenständlichen Malerei mit einer zweiten Laufbahn als Kunsterzieher. Krieg, wirtschaftliche Verantwortung und der Schuldienst prägten, wann und wie er malen konnte.</p>
+        </div>
+        <div class="biography-layout">
+          <ol class="timeline" aria-label="Lebensstationen">
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1910">1910–1932</time>
+              <div class="timeline-copy">
+                <h3>Frühe Prägung und Kunststudium</h3>
+                <p>Am 26. November 1910 wurde Gillessen in Mönchengladbach als Sohn eines Malermeisters geboren. Schon als Jugendlicher malte er; mit 13 kopierte er ein Gemälde des Eifelmalers Fritz von Wille. Nach dem humanistischen Gymnasium und dem Abitur begann er 1932 sein Studium an der Kunstakademie Düsseldorf. Er wurde Meisterschüler von Max Clarenbach und begegnete dort unter anderem Paul Klee, Heinrich Campendonk und Moll.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1935">1935–1939</time>
+              <div class="timeline-copy">
+                <h3>Erste Erfolge am Niederrhein</h3>
+                <p>Nach dem Studium ließ er sich 1935 als freischaffender Künstler im Dillborner Wald bei Brüggen nieder und gründete eine Familie. Mit einer Beteiligung an einer Ausstellung des Kölner Kunstvereins gelang ihm 1937/38 der Durchbruch. Es folgten Einzelausstellungen in Mönchengladbach und Aachen sowie Ausstellungsbeteiligungen unter anderem in Düsseldorf, Krefeld und Berlin.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1939">1939–1945</time>
+              <div class="timeline-copy">
+                <h3>Krieg und Verlust</h3>
+                <p>Während des Zweiten Weltkriegs diente Gillessen als Frontsoldat und wurde 1942 nach Russland verlegt. Nur während einiger Monate an der holländischen Küste konnte er künstlerisch arbeiten; dort erhielt er im Wettbewerb „Soldat in Holland“ den ersten und zweiten Preis. Viele seiner Werke gingen während des Krieges verloren oder wurden geplündert.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1946">1946–1949</time>
+              <div class="timeline-copy">
+                <h3>Neuanfang und Engagement</h3>
+                <p>Nach Kriegsende nahm Gillessen seine Malerei wieder auf. Ausstellungen in Mönchengladbach und Düsseldorf markierten 1948 seinen künstlerischen Neuanfang. 1949 engagierte er sich in der regionalen Kulturarbeit und war Mitbegründer des Mönchengladbacher Kunstvereins „Die Planke“.</p>
+                <p>Die Familienerinnerungen beschreiben, wie die wirtschaftliche Verantwortung für eine wachsende Familie und die geringe Nachfrage nach gegenständlicher Malerei seine beruflichen Möglichkeiten einschränkten. Die Familie erinnert auch daran, dass gegenständliche Kunst nach dem Krieg als politisch belastet wahrgenommen wurde. Die Qualität der damals verfügbaren Malmittel habe zudem manchen seiner Ölbilder geschadet.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1951">1951–1974</time>
+              <div class="timeline-copy">
+                <h3>Kunsterzieher und Kulturvermittler</h3>
+                <p>1951 trat Gillessen in den gymnasialen Schuldienst ein und arbeitete als Kunsterzieher, zuletzt als Studiendirektor in Neuss. Berufsbegleitend studierte er erneut und schloss 1958 mit dem Staatsexamen für Kunsterziehung und Werken ab; seine Examensarbeit schrieb er über Rembrandt. Er leitete den Landesverband Nordrhein-Westfalen des Bundes Deutscher Kunsterzieher und wirkte im staatlichen Prüfungsamt mit, wo er auch gemeinsam mit Joseph Beuys angehende Kunsterzieher prüfte. Um 1958 entstand in Neuss das Einfamilienhaus der Familie.</p>
+                <p>Nach den Familienaufzeichnungen setzte er sich für das musische Gymnasium in Nordrhein-Westfalen ein und verwirklichte es in Neuss. Gillessen war dafür bekannt, sein Wissen mit großer Anschaulichkeit weiterzugeben; eine Familienerinnerung schildert, wie er Schüler eine auf dem Kopf stehende Kandinsky-Kopie neu deuten ließ.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <time class="timeline-year" datetime="1974">1974–1997</time>
+              <div class="timeline-copy">
+                <h3>Atelier in der Eifel und späte Jahre</h3>
+                <p>Nach dem Eintritt in den Ruhestand zog Gillessen nach Nonnenbach bei Blankenheim, wo er ein Haus mit Atelier gebaut hatte. Dort entstanden zahlreiche Eifellandschaften; auf Reisen nach Italien malte er ebenfalls. Die Notizen beschreiben sein letztes Selbstbildnis als farbiger und flächiger als frühere Arbeiten. Gillessen hatte vier Kinder – Karl-Heino, Adelheid, Christa und Wolfhart – und neun Enkelkinder. Er starb am 11. Oktober 1997 und wurde in Blankenheim beigesetzt.</p>
+              </div>
+            </li>
+          </ol>
+          <aside class="biography-aside" aria-label="Ergänzende Erinnerungen">
+            <section class="biography-note quote">
+              <h3>„Kunst kommt von Können!“</h3>
+              <p>Gillessens überlieferter Leitspruch verweist auf seine Überzeugung: Begabung allein genügt nicht – Können wächst durch Lernen, Übung und gute Lehrer.</p>
+            </section>
+            <section class="biography-note">
+              <h3>Familie und Malerei</h3>
+              <p>Gillessen war von 1935 bis 1974 mit Katharina Derwahl verheiratet. Laut Familiennotizen brachte sie das Haus in Brüggen in die Ehe ein. Seine Kinder erinnerten sich daran, dass er die künstlerische Laufbahn als wirtschaftlich unsicher einschätzte und ihnen zu „etwas Vernünftigem“ riet. Zugleich blieb die Anerkennung als Künstler für ihn bedeutsam – auch bei Malkursen und Begegnungen mit Schülern.</p>
+            </section>
+            <section class="biography-note">
+              <h3>Einordnung der Überlieferung</h3>
+              <p>Die Familiennotizen halten fest, dass Gillessen kein Mitglied der NSDAP war. Sie nennen außerdem einen Offiziersrang, das Ritterkreuz und eine Flucht aus der Gefangenschaft. Diese Angaben sind in der vorliegenden Sammlung nicht näher belegt und sollten vor einer weitergehenden Darstellung anhand von Dokumenten geprüft werden.</p>
+            </section>
+          </aside>
+        </div>
+        <p class="source-note">Diese Biografie beruht auf einer familiären Stoffsammlung. Erinnerungen und dort nicht weiter belegte Angaben sind entsprechend eingeordnet.</p>
+      </section>
+      <section id="archiv" aria-label="Bildarchiv">
         <div class="toolbar">
           <div class="filters" role="group" aria-label="Nach Aufnahmedatum filtern">
             <button class="filter" type="button" data-filter="all" aria-pressed="true">Alle</button>
